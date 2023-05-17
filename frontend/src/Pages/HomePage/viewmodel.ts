@@ -1,28 +1,7 @@
 import { ChangeEvent, KeyboardEvent, useRef, useState } from "react";
 
 export function useViewModel() {
-	const [lists, setLists] = useState<KanbanList[]>([
-		{
-			id: "list_1",
-			items: [
-				{
-					id: "element_1",
-					content: "merhaba",
-				},
-			],
-			title: "Liste",
-		},
-		{
-			id: "list_2",
-			items: [
-				{
-					id: "element_2",
-					content: "dunya",
-				},
-			],
-			title: "Liste 2",
-		},
-	]);
+	const [lists, setLists] = useState<KanbanList[]>([]);
 	const [newListTitle, setNewListTitle] = useState<string>("");
 	const [addListMenuVisible, setAddListMenuVisible] =
 		useState<boolean>(false);

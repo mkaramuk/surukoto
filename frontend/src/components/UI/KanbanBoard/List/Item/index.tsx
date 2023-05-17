@@ -16,7 +16,7 @@ export function Item(props: ListItemProps) {
 			{...attributes}
 			{...listeners}
 			ref={setNodeRef}
-			className="transition-all duration-500 border-2 border-gray-300 bg-white shadow-sm p-2 rounded-lg"
+			className="transition-all duration-500 border-2 border-space-400 bg-space-500 p-2 rounded-lg hover:bg-space-400 hover:border-space-300"
 			style={{
 				opacity: isDragging ? 0.4 : undefined,
 				transform: CSS.Translate.toString(transform),

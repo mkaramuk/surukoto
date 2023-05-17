@@ -1,45 +1,10 @@
-import { ReactNode } from "react";
 import { DndContext, DragOverlay, closestCenter } from "@dnd-kit/core";
-import { CSS } from "@dnd-kit/utilities";
 import {
 	SortableContext,
 	horizontalListSortingStrategy,
-	useSortable,
 } from "@dnd-kit/sortable";
 import { useViewModel } from "./viewmodel";
 import { List } from "./List";
-
-interface DraggableListProps {
-	children?: ReactNode;
-	id: string;
-}
-
-function DraggableList(props: DraggableListProps) {
-	const {
-		setNodeRef,
-		attributes,
-		listeners,
-		transform,
-		transition,
-		isDragging,
-	} = useSortable({ id: props.id });
-
-	return (
-		<div
-			{...attributes}
-			{...listeners}
-			ref={setNodeRef}
-			className="h-fit"
-			style={{
-				opacity: isDragging ? 0.4 : undefined,
-				transform: CSS.Translate.toString(transform),
-				transition,
-			}}
-		>
-			{props.children}
-		</div>
-	);
-}
 
 export function KanbanBoard(props: KanbanBoardProps) {
 	const viewModel = useViewModel(props);
@@ -59,39 +24,41 @@ export function KanbanBoard(props: KanbanBoardProps) {
 				strategy={horizontalListSortingStrategy}
 			>
 				{viewModel.getLists().map((list, index) => (
-					<DraggableList id={list.id} key={index}>
-						<List
-							onTitleChanged={(newTitle) =>
-								viewModel.setListTitle(list.id, newTitle)
-							}
-							onNewCardAdded={(title) =>
-								viewModel.addNewCard(list.id, title)
-							}
-							list={list}
-							id={list.id}
-						/>
-					</DraggableList>
+					<List
+						key={index}
+						onTitleChanged={(newTitle) =>
+							viewModel.setListTitle(list.id, newTitle)
+						}
+						onNewCardAdded={(title) =>
+							viewModel.addNewCard(list.id, title)
+						}
+						list={list}
+						id={list.id}
+					/>
 				))}
 			</SortableContext>
 			<DragOverlay>
 				{viewModel.draggedItem ? (
-					<div className="rotate-3 border-2 border-gray-300 bg-white shadow-lg p-2 rounded-lg">
+					<div className="rotate-3 border-2 border-space-400 bg-space-500 p-2 rounded-lg text-white">
 						{viewModel.draggedItem.content}
 					</div>
 				) : null}
 				{viewModel.draggedList ? (
-					<div className="bg-gray-100 rotate-3 border-2 border-gray-300 w-[350px] h-fit flex flex-col shadow-lg rounded-lg overflow-hidden p-2 gap-2">
-						<div className="mx-4 my-2 text-2xl font-bold hover:cursor-pointer">
+					<div className="rotate-2 bg-space-600 shadow-2xl text-white border-2 border-space-400 w-[350px] h-fit flex flex-col rounded-lg overflow-hidden">
+						<div className="mx-4 my-2 text-2xl font-bold">
 							{viewModel.draggedList.title}
 						</div>
-						{viewModel.draggedList.items.map((item, index) => (
-							<div
-								key={index}
-								className="transition-all duration-500 border-2 border-gray-300 bg-white shadow-sm p-2 rounded-lg"
-							>
-								{item.content}
-							</div>
-						))}
+						<hr className="w-[90%] self-center border-space-200" />
+						<ul className="flex flex-col gap-3 p-5 overflow-y-auto ">
+							{viewModel.draggedList.items.map((item, index) => (
+								<li
+									key={index}
+									className="transition-all duration-500 border-2 border-space-400 bg-space-500 p-2 rounded-lg hover:bg-space-400 hover:border-space-300"
+								>
+									{item.content}
+								</li>
+							))}
+						</ul>
 					</div>
 				) : null}
 			</DragOverlay>

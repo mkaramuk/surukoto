@@ -1,7 +1,17 @@
 import { useDroppable } from "@dnd-kit/core";
+import { useSortable } from "@dnd-kit/sortable";
 import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 
 export function useViewModel(props: ListProps) {
+	const {
+		setNodeRef: setNodeRefList,
+		attributes,
+		listeners,
+		transform,
+		transition,
+		isDragging,
+	} = useSortable({ id: props.id });
+
 	const [title, setTitle] = useState<string>(props.list.title);
 	const [newCardTitle, setNewCardTitle] = useState<string>("");
 	const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false);
@@ -67,6 +77,12 @@ export function useViewModel(props: ListProps) {
 		newCardTitle,
 		addCardFieldVisible,
 		titleEditInputRef,
+		attributes,
+		listeners,
+		transform,
+		transition,
+		isDragging,
+		setNodeRefList,
 		addNewCard,
 		setNodeRef,
 		showAddItemField,

@@ -2,6 +2,7 @@ import {
 	SortableContext,
 	verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { Icon } from "@iconify/react";
 import { Item } from "./Item";
 import { useViewModel } from "./viewmodel";
@@ -15,15 +16,25 @@ export function List(props: ListProps) {
 			items={props.list.items}
 			strategy={verticalListSortingStrategy}
 		>
-			<div className="bg-gray-100 border-2 border-gray-300 w-[350px] h-fit flex flex-col rounded-lg overflow-hidden">
+			<div
+				{...viewModel.attributes}
+				{...viewModel.listeners}
+				ref={viewModel.setNodeRefList}
+				style={{
+					opacity: viewModel.isDragging ? 0.4 : undefined,
+					transform: CSS.Translate.toString(viewModel.transform),
+					transition: viewModel.transition,
+				}}
+				className="bg-space-600 shadow-2xl text-white border-2 border-space-400 w-[350px] h-fit flex flex-col rounded-lg overflow-hidden"
+			>
 				{viewModel.isEditingTitle ? (
 					<input
 						ref={viewModel.titleEditInputRef}
-						onKeyDown={viewModel.onEditTitleEnd}
+						className="bg-space-400 mx-4 my-3 p-1 text-xl font-bold rounded-lg transition-all duration-500 outline-none focus:outline-space-200"
 						value={viewModel.title}
 						onChange={viewModel.onTitleChange}
 						onBlur={viewModel.onTitleEditBlur}
-						className="mx-4 my-2 p-1 text-xl font-bold border-2 rounded-lg transition-all duration-500 outline-none focus:border-2 focus:border-blue-400"
+						onKeyDown={viewModel.onEditTitleEnd}
 					/>
 				) : (
 					<div
@@ -34,7 +45,7 @@ export function List(props: ListProps) {
 					</div>
 				)}
 
-				<hr className="w-[90%] self-center" />
+				<hr className="w-[90%] self-center border-space-200" />
 				<ul
 					ref={viewModel.setNodeRef}
 					className="flex flex-col gap-3 p-5 overflow-y-auto "
@@ -47,19 +58,19 @@ export function List(props: ListProps) {
 					{viewModel.addCardFieldVisible ? (
 						<li>
 							<input
-								onKeyDown={viewModel.addNewCard}
-								value={viewModel.newCardTitle}
-								onChange={viewModel.onNewCardTitleChange}
-								placeholder="Enter a title to your card"
 								ref={viewModel.addCardInputRef}
+								className="w-full p-3 bg-space-300 rounded-lg outline-none focus:outline-space-200"
+								value={viewModel.newCardTitle}
+								placeholder="Enter a title for new card"
+								onKeyDown={viewModel.addNewCard}
 								onBlur={viewModel.hideAddItemField}
-								className="w-full p-3"
+								onChange={viewModel.onNewCardTitleChange}
 							/>
 						</li>
 					) : null}
 					<li
 						onClick={viewModel.showAddItemField}
-						className="flex items-center gap-3 w-full rounded-md p-3 hover:cursor-pointer hover:bg-gray-200"
+						className="flex items-center gap-3 w-full rounded-md p-3 hover:cursor-pointer hover:bg-space-300"
 					>
 						<Icon
 							className="transition-all duration-500"

@@ -6,16 +6,16 @@ export function HomePage() {
 	const viewModel = useViewModel();
 
 	return (
-		<div className="w-screen h-screen bg-black flex gap-2 p-10 overflow-x-auto">
+		<div className="w-screen h-screen bg-space-500 flex gap-2 p-10 overflow-x-auto">
 			<KanbanBoard
 				lists={viewModel.lists}
 				onChange={viewModel.onBoardChanged}
 			/>
-			<div className="flex flex-col w-[350px] items-center bg-blue-300 p-4 rounded-lg h-fit gap-3 transition-all duration-500">
+			<div className="bg-space-600 shadow-2xl text-white border-2 border-space-400 w-[350px] h-fit flex flex-col rounded-lg overflow-hidden gap-3 p-5">
 				{viewModel.addListMenuVisible && (
 					<input
 						ref={viewModel.newListTitleInputRef}
-						className={`bg-gray-100 border-2 border-gray-300 w-full h-[50px] rounded-lg p-2`}
+						className="w-full p-3 bg-space-300 rounded-lg outline-none focus:outline-space-200"
 						value={viewModel.newListTitle}
 						onChange={viewModel.onNewListTitleChange}
 						onKeyDown={viewModel.onNewCardTitleInputKeyDown}
@@ -29,7 +29,7 @@ export function HomePage() {
 								? viewModel.addNewList
 								: viewModel.showAddListMenu
 						}
-						className="transition-all duration-500 h-[50px] text-xl text-white bg-blue-600 rounded-lg p-2  hover:cursor-pointer hover:bg-blue-500 w-full"
+						className="transition-all duration-500 h-[50px] text-xl text-white bg-chill-400 rounded-lg p-2  hover:cursor-pointer hover:bg-chill-500 w-full"
 					>
 						Add another list
 					</button>
