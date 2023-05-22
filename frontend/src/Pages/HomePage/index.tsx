@@ -6,7 +6,7 @@ export function HomePage() {
 	const viewModel = useViewModel();
 
 	return (
-		<div className="w-screen h-screen bg-space-500 flex gap-2 p-10 overflow-x-auto">
+		<div className="w-screen h-screen flex gap-2 p-10 overflow-x-auto">
 			<KanbanBoard
 				lists={viewModel.lists}
 				onChange={viewModel.onBoardChanged}
@@ -29,7 +29,7 @@ export function HomePage() {
 								? viewModel.addNewList
 								: viewModel.showAddListMenu
 						}
-						className="transition-all duration-500 h-[50px] text-xl text-white bg-chill-400 rounded-lg p-2  hover:cursor-pointer hover:bg-chill-500 w-full"
+						className="h-[50px] text-xl w-full"
 					>
 						Add another list
 					</button>
